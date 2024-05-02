@@ -1,71 +1,80 @@
 import PageTemplate from "@assets/page/PageTemplate";
 import { FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { ArrowLeftIcon, KeyIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 
 import { Card } from 'primereact/card';
-import { FloatLabel } from 'primereact/floatlabel';
-import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
-import { Link } from "react-router-dom";
-        
-
+import TextInput from "@assets/components/TextInput";
 
 const Login = () => {
- 
-    const [username, setUsername] = useState("")
+
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loginCorrect, setLogin] = useState(true)
 
     const OnSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-        // const res = await context.login(username, password);
+        // const res = await context.login(email, password);
 
         // console.log(res)
         // if (res == true){
         //     goHome('/learn')
         // }
         // else{
-        //     setLogin(false)
+        setLogin(false)
         // }
     }
 
     return (
         <PageTemplate>
+            <Link to="/" className="self-start inline-flex items-center gap-2">
+                <ArrowLeftIcon className="w-6" />
+                Back
+            </Link>
 
             <form onSubmit={OnSubmit}>
+                <Card title="Login" className="bg-transparent lg:w-1/2 xl:w-1/3 mx-auto text-center rounded-xl px-4">
 
-                <Link to="/" className=" self-start">
-                    Back
-                </Link>
+                    <TextInput
+                        logo={<EnvelopeIcon className="w-7" />}
+                        id="email"
+                        label="Email"
+                        value={email}
+                        setValue={setEmail}
+                    />
 
-                <Card title="Login" className="w-1/2 mx-auto mt-10 p-5 shadow mb-5 text-center bg-blue-100 rounded text-black">
-                    
-                    <FloatLabel>
-                        <InputText id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                        <label htmlFor="username">Username</label>
-                    </FloatLabel>
+                    <TextInput
+                        logo={<KeyIcon className="w-7" />}
+                        id="password"
+                        label="Password"
+                        value={password}
+                        setValue={setPassword}
+                        fieldsetClass="mb-3"
+                    />
 
-                    <FloatLabel>
-                        <InputText id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <label htmlFor="password">Password</label>
-                    </FloatLabel>
-
-                    <Button label="Login" />
-
-                    <Link to="/signup" className="text-[#76ABAE]">
-                        If you don't have an account yet, click me!
-                    </Link>
                     {loginCorrect === false && (
-                        <h2 className="text-red-600 font-semibold text-lg">Incorrect user or password</h2>
+                        <p className="text-red-600 font-light text-sm text-center">
+                            Incorrect user or password
+                        </p>
                     )}
 
+                    <div className="flex justify-center">
+                        <Button label="Login" className="border-2 border-violet-800 text-violet-800 hover:bg-violet-800 focus:bg-violet-800 hover:text-white focus:text-white my-3 py-1 px-4" />
+                    </div>
+
+                    <p>
+                        Don't have an account yet?
+                        <Link to="/signup" className="text-violet-800 ms-1 border-b-2 border-violet-800/80">
+                            Sign up here!
+                        </Link>
+                    </p>
                 </Card>
-
             </form>
-
         </PageTemplate>
     );
-
 }
 
 export default Login;

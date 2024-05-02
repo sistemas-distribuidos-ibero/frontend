@@ -2,10 +2,11 @@ import PageTemplate from "@assets/page/PageTemplate";
 import { FormEvent, useState } from "react";
 
 import { Card } from 'primereact/card';
-import { FloatLabel } from 'primereact/floatlabel';
-import { InputText } from "primereact/inputtext";
 import { Button } from 'primereact/button';
 import { Link } from "react-router-dom";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import TextInput from "@assets/components/TextInput";
+import { EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const Signup = () => {
 
@@ -13,11 +14,10 @@ const Signup = () => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
-    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [errorType, setErrorType] = useState(1)
 
-    const errors: any = {
+    const errors = {
         1: 'Empty First Name input!',
         2: 'Empty Last Name input!',
         3: 'Add an email!',
@@ -28,23 +28,19 @@ const Signup = () => {
 
     const OnSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        
-        if (firstName === ''){
+
+        if (firstName === '') {
             setLogin(false)
         }
-        else if (lastName === ''){
+        else if (lastName === '') {
             setErrorType(2)
             setLogin(false)
         }
-        else if (email === ''){
+        else if (email === '') {
             setErrorType(3)
             setLogin(false)
         }
-        else if (username === ''){
-            setErrorType(4)
-            setLogin(false)
-        }
-        else if (password === ''){
+        else if (password === '') {
             setErrorType(5)
             setLogin(false)
         }
@@ -63,58 +59,65 @@ const Signup = () => {
 
     return (
         <PageTemplate>
+            <Link to="/" className="self-start inline-flex items-center gap-2">
+                <ArrowLeftIcon className="w-6" />
+                Back
+            </Link>
 
             <form onSubmit={OnSubmit}>
-
-                <Link to="/" className=" self-start">
-                    Back
-                </Link>
-
-                <Card title="Signup" className="w-1/2 mx-auto mt-10 p-5 shadow mb-5 text-center bg-blue-100 rounded text-black">
+                <Card title="Signup" className="bg-transparent lg:w-1/2 xl:w-1/3 mx-auto text-center rounded-xl px-4">
                     {/* First Name */}
-                    <FloatLabel>
-                        <InputText id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                        <label htmlFor="firstName">Firstname</label>
-                    </FloatLabel>
+                    <TextInput
+                        logo={<EnvelopeIcon className="w-7" />}
+                        id="firstName"
+                        label="First Name"
+                        value={firstName}
+                        setValue={setFirstName}
+                    />
 
                     {/* Last Name */}
-                    <FloatLabel>
-                        <InputText id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                        <label htmlFor="lastName">Lastname</label>
-                    </FloatLabel>
+                    <TextInput
+                        logo={<EnvelopeIcon className="w-7" />}
+                        id="lastName"
+                        label="Last Name"
+                        value={lastName}
+                        setValue={setLastName}
+                    />
 
                     {/* Email */}
-                    <FloatLabel>
-                        <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <label htmlFor="email">Email</label>
-                    </FloatLabel>
-
-                    {/* Username */}
-                    <FloatLabel>
-                        <InputText id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                        <label htmlFor="username">Username</label>
-                    </FloatLabel>
+                    <TextInput
+                        logo={<EnvelopeIcon className="w-7" />}
+                        id="email"
+                        label="Email"
+                        value={email}
+                        setValue={setEmail}
+                    />
 
                     {/* Password */}
-                    <FloatLabel>
-                        <InputText id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <label htmlFor="password">Password</label>
-                    </FloatLabel>
-
-                    <Button label="Signup" />
-
-                    <Link to="/login" className="text-[#76ABAE]">
-                        If you already have an account, click me!
-                    </Link>
+                    <TextInput
+                        logo={<EnvelopeIcon className="w-7" />}
+                        id="password"
+                        label="Password"
+                        value={password}
+                        setValue={setPassword}
+                    />
 
                     {loginCorrect === false && (
-                        <h2 className="text-red-600 font-semibold text-lg">{errors[errorType]}</h2>
+                        <p className="text-red-600 font-light text-sm text-center">{errors[errorType]}</p>
                     )}
 
+                    <div className="flex justify-center">
+                        <Button label="Sign Up" className="border-2 border-violet-800 text-violet-800 hover:bg-violet-800 focus:bg-violet-800 hover:text-white focus:text-white my-3 py-1 px-4" />
+                    </div>
+
+                    <p>
+                        Already have an account?
+                        <Link to="/login" className="text-violet-800 ms-1 border-b-2 border-violet-800/80">
+                            Login here!
+                        </Link>
+                    </p>
                 </Card>
-
             </form>
-
         </PageTemplate>
     );
 
