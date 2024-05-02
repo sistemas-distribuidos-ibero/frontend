@@ -40,8 +40,8 @@ const NavBar = () => {
     return (
         <Menubar className='p-3 sm:px-8 bg-gradient-to-b from-violet-800/50'
             start={
-                <hgroup id='top' className='me-3 md:me-8' >
-                    {/* TODO Logo */}
+                <hgroup id='top' className='me-3 md:me-8 inline-flex gap-2' >
+                    <img src='/logo.svg' className='w-10' />
                     <Link to='/' className='text-lg md:text-2xl'>E-Commerce</Link>
                 </hgroup>
             }
