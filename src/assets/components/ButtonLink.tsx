@@ -9,7 +9,7 @@ interface Props {
 
 const ButtonLink = ({ to, children, className }: Props) => {
     return (
-        <Link to={to} className={`inline-flex items-center py-2 px-3 md:py-3 md:px-5 rounded hover:bg-white/5 focus:bg-white/5 focus:outline-none ${className}`}>
+        <Link to={to} className={`inline-flex items-center py-2 px-3 md:py-3 md:px-5 rounded hover:bg-black/5 focus:bg-black/5 focus:outline-none ${className}`}>
             {children}
         </Link>
     );

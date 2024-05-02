@@ -1,25 +1,40 @@
 import { Menubar } from 'primereact/menubar';
 import { MenuItem } from 'primereact/menuitem';
-import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import ButtonLink from '@assets/ButtonLink';
+import { useMemo } from 'react';
 
 const NavBar = () => {
+    // TODO bool to user verification
+    const notUser = true
 
-    const bool = true
 
-    const items: MenuItem[] = [
-        {
-            label: 'Home',
-            icon: <HomeIcon className='w-7 pe-1' />,
-            url: '/',
-        },
-        {
-            label: 'Products',
-            icon: <TagIcon className='w-7 pe-1' />,
-            url: '/products',
+    const items: MenuItem[] = useMemo(() => {
+        const temp = [
+            {
+                label: 'Home',
+                icon: <HomeIcon className='w-7 pe-1' />,
+                url: '/',
+            },
+            {
+                label: 'Products',
+                icon: <TagIcon className='w-7 pe-1' />,
+                url: '/products',
+            },
+        ]
+
+        if (!notUser) {
+            temp.push({
+                label: 'My Orders',
+                icon: <ArchiveBoxIcon className='w-7 pe-1' />,
+                url: '/orders',
+            })
         }
-    ]
+
+        return temp
+    }, [notUser])
+
 
     {/* start={start} end={end} */ }
     return (
@@ -35,7 +50,7 @@ const NavBar = () => {
 
             end={
                 <section className='flex gap-2'>
-                    {bool ? (
+                    {notUser ? (
                         <>
                             <ButtonLink to='/signup'>
                                 <UserPlusIcon className='w-7 pe-1' />
