@@ -29,6 +29,7 @@
       "@pages/*": [
         "pages/*",
         "pages/home/*",
+        "pages/auth/*",
       ],
       "@assets/*": [
         "assets/*",
