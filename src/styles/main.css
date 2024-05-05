@@ -12,6 +12,10 @@
     @tailwind utilities;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .p-stepper .p-stepper-header.p-highlight .p-stepper-number {
     background: #5B21B6;
 }

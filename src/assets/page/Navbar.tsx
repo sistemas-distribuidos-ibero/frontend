@@ -42,7 +42,7 @@ const NavBar = () => {
             start={
                 <hgroup className='me-3 md:me-8 inline-flex gap-2' >
                     {/* <img src='/logo.svg' className='w-10' /> */}
-                    <Link to='/' className='text-lg md:text-2xl' > E - Commerce</Link>
+                    <Link to='/' className='text-lg md:text-2xl font-semibold' > E - Commerce</Link>
                 </hgroup >
             }
 

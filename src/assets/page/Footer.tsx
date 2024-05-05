@@ -8,7 +8,7 @@ const Footer = ({ needBack2Top }: Props) => {
     return (
         <>
             {needBack2Top &&
-                <a href='#top' className="inline-flex items-center gap-4 justify-center w-full hover:bg-white/5 hover:text-violet-800 text-lg focus:outline-none focus:bg-white/5 focus:text-violet-800 p-2 mb-2">
+                <a href='#top' className="inline-flex items-center gap-4 justify-center w-full hover:bg-white/5 hover:text-violet-800 text-lg focus:outline-none focus:bg-white/5 focus:text-violet-800 p-2 mb-2 scroll-smooth">
                     <ChevronUpIcon className="w-7" />
                     Go back to top
                     <ChevronUpIcon className="w-7" />

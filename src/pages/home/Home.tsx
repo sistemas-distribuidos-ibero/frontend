@@ -6,21 +6,20 @@ import { StepperPanel } from 'primereact/stepperpanel';
 
 import {
     BookOpenIcon, PencilIcon,
-    CameraIcon, ComputerDesktopIcon,
+    CameraIcon, TruckIcon,
     DevicePhoneMobileIcon, GiftIcon,
     ShoppingBagIcon, CreditCardIcon,
-    TruckIcon
 } from "@heroicons/react/24/outline";
 
 import PageTemplate from "@assets/PageTemplate";
 import FloatingItem from "@assets/components/FloatingItem";
+
 import "@styles/floatingItem.css";
 
 const Home = () => {
     const logos = [
         <BookOpenIcon />,
         <CameraIcon />,
-        <ComputerDesktopIcon />,
         <DevicePhoneMobileIcon />,
         <GiftIcon />,
         <PencilIcon />,
@@ -38,15 +37,7 @@ const Home = () => {
 
             <hr />
 
-            <section className="lg:grid lg:grid-cols-2 py-3 lg:py-12 lg:gap-8">
-                <figure className="py-6 lg:pt-10">
-                    <picture className="flex justify-center">
-                        <img src="/images/shopping.svg" alt="Web Shopping" className="w-9/12" />
-                    </picture>
-
-                    {logos.map((logo, index) => <FloatingItem logo={logo} key={index} />)}
-                </figure>
-
+            <section className="lg:grid lg:grid-cols-2 py-3 lg:py-12 lg:gap-8 lg:items-center">
                 <div>
                     <h2 className="text-2xl mb-2">What is E-Commerce?</h2>
                     <p className="mb-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, in. Aspernatur temporibus tempora eveniet assumenda magni animi voluptatum error? Aliquam optio odit modi! Dolores nesciunt ad fuga recusandae, aliquid quas animi iusto soluta! Ipsum, illo? Amet cumque odio repudiandae eveniet aliquid accusamus pariatur exercitationem ratione! Hic laborum molestiae fugit magni!</p>
@@ -82,9 +73,26 @@ const Home = () => {
                         </StepperPanel>
                     </Stepper>
                 </div>
+
+                <figure className="relative shopping-svg mt-12">
+                    <img src="/images/shopping.svg" alt="Web Shopping" className="w-9/12 lg:w-full xl:w-9/12 mx-auto" />
+
+                    {logos.map((logo, index) => <FloatingItem logo={logo} key={index} />)}
+
+                    <figcaption className="hidden">An illustration of shopping</figcaption>
+                </figure>
             </section>
 
+            <hr />
 
+            <section>
+                {/* 
+                    Fresh items
+                    Products 
+                    Go buy Now
+                */}
+
+            </section>
             {/* 
                 Fresh items
                 Products 

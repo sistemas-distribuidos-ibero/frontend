@@ -9,7 +9,7 @@ type Props = {
 
 const PageTemplate = ({ children, needBack2Top }: Props) => {
     return (
-        <div className="bg-gradient-to-t from-white flex flex-col h-full min-h-[100vh]">
+        <div className="bg-gradient-to-t from-white flex flex-col h-full min-h-[100vh] scroll-smooth">
             <Navbar />
 
             <main className="flex-grow py-5 px-10">
