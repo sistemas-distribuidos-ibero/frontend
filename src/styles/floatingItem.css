@@ -4,11 +4,7 @@
 }
 
 .floating {
-    top: 9.2rem;
-    left: 23rem;
     opacity: 0;
-
-    offset-path: path(" M 0 0 A 10 16 0 0 1 160 200");
     animation: floatingAnimation ease-in-out;
 }
 
