@@ -1,31 +1,29 @@
-import PageTemplate from "@assets/PageTemplate";
-import FloatingItem from "@assets/components/FloatingItem";
-import {
-    BookOpenIcon, TagIcon,
-    CameraIcon, ComputerDesktopIcon,
-    DevicePhoneMobileIcon, GiftIcon,
-    PencilIcon, PaperClipIcon,
-    ShoppingBagIcon, CreditCardIcon,
-    TruckIcon
-} from "@heroicons/react/24/outline";
+import { LegacyRef, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Stepper, StepperRefAttributes } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
-import { LegacyRef, useRef } from "react";
-import { Link } from "react-router-dom";
 
+import {
+    BookOpenIcon, PencilIcon,
+    CameraIcon, ComputerDesktopIcon,
+    DevicePhoneMobileIcon, GiftIcon,
+    ShoppingBagIcon, CreditCardIcon,
+    TruckIcon
+} from "@heroicons/react/24/outline";
 
+import PageTemplate from "@assets/PageTemplate";
+import FloatingItem from "@assets/components/FloatingItem";
+import "@styles/floatingItem.css";
 
 const Home = () => {
     const logos = [
         <BookOpenIcon />,
-        <TagIcon />,
         <CameraIcon />,
         <ComputerDesktopIcon />,
         <DevicePhoneMobileIcon />,
         <GiftIcon />,
         <PencilIcon />,
-        <PaperClipIcon />
     ]
 
     const stepperRef = useRef<StepperRefAttributes | undefined>(undefined);
@@ -40,15 +38,9 @@ const Home = () => {
 
             <hr />
 
-            <section className="lg:grid lg:grid-cols-2 py-3 lg:py-6 lg:gap-8">
-                {/* 
-                    Floating items
-                    Logo
-                    Description
-                    Go buy Now
-                */}
-                <figure>
-                    <picture className="flex justify-center py-6 lg:pt-10">
+            <section className="lg:grid lg:grid-cols-2 py-3 lg:py-12 lg:gap-8">
+                <figure className="py-6 lg:pt-10">
+                    <picture className="flex justify-center">
                         <img src="/images/shopping.svg" alt="Web Shopping" className="w-9/12" />
                     </picture>
 
@@ -59,7 +51,6 @@ const Home = () => {
                     <h2 className="text-2xl mb-2">What is E-Commerce?</h2>
                     <p className="mb-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, in. Aspernatur temporibus tempora eveniet assumenda magni animi voluptatum error? Aliquam optio odit modi! Dolores nesciunt ad fuga recusandae, aliquid quas animi iusto soluta! Ipsum, illo? Amet cumque odio repudiandae eveniet aliquid accusamus pariatur exercitationem ratione! Hic laborum molestiae fugit magni!</p>
 
-                    {/* CAso de uso compra hasta envío  */}
                     <Stepper ref={stepperRef as LegacyRef<StepperRefAttributes>} orientation={window.innerWidth < 768 ? "horizontal" : "vertical"}>
                         <StepperPanel header="Choose">
                             <div className="border-2 border-dashed rounded-xl flex flex-col justify-center items-center py-5 my-1">

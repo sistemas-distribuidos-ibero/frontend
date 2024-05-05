@@ -38,9 +38,9 @@ const NavBar = () => {
 
     {/* start={start} end={end} */ }
     return (
-        <Menubar className='p-3 sm:px-8 border-b-2 border-violet-800/80'
+        <Menubar id='top' className='p-3 sm:px-8 border-b-2 border-violet-800/80'
             start={
-                <hgroup id='top' className='me-3 md:me-8 inline-flex gap-2' >
+                <hgroup className='me-3 md:me-8 inline-flex gap-2' >
                     {/* <img src='/logo.svg' className='w-10' /> */}
                     <Link to='/' className='text-lg md:text-2xl' > E - Commerce</Link>
                 </hgroup >
