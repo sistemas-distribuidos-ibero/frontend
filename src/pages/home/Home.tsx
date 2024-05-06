@@ -90,7 +90,7 @@ const Home = () => {
                     <h2 className="text-2xl mb-2">What is E-Commerce?</h2>
                     <p className="mb-4 text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium eveniet dolorem mollitia sunt tenetur earum iste asperiores, minus rem ipsam eligendi quidem voluptas temporibus sequi aperiam architecto nemo impedit reprehenderit?</p>
 
-                    <Stepper ref={stepperRef as LegacyRef<StepperRefAttributes>} orientation={window.innerWidth < 768 ? "horizontal" : "vertical"}>
+                    <Stepper ref={stepperRef as LegacyRef<StepperRefAttributes>}>
                         <StepperPanel header="Choose">
                             <div className="border-2 rounded-xl flex flex-col justify-center items-center py-5 my-1">
                                 <ShoppingBagIcon className="w-12 text-violet-800" />
@@ -101,7 +101,7 @@ const Home = () => {
                             </footer>
                         </StepperPanel>
                         <StepperPanel header="Pay">
-                            <div className="border-2 rounded-xl flex flex-col justify-center items-center py-5 my-1">
+                            <div className="border-2 rounded-xl flex flex-col justify-center items-center py-5 my-1 px-3">
                                 <CreditCardIcon className="w-12 text-violet-800" />
                                 <p className="text-center mt-2">We have prepare for you all possible pay methods for you to choose</p>
                             </div>
