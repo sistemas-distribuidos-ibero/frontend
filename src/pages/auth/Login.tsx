@@ -30,13 +30,13 @@ const Login = () => {
 
     return (
         <PageTemplate>
-            <Link to="/" className="self-start inline-flex items-center gap-2">
+            <Link to="/" className="self-start inline-flex items-center gap-2 mb-5">
                 <ArrowLeftIcon className="w-6" />
                 Back
             </Link>
 
             <form onSubmit={OnSubmit}>
-                <Card title="Login" className="bg-transparent lg:w-1/2 xl:w-1/3 mx-auto text-center rounded-xl px-4">
+                <Card title="Login" className="bg-transparent md:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto text-center rounded-xl px-4">
 
                     <TextInput
                         logo={<EnvelopeIcon className="w-7" />}

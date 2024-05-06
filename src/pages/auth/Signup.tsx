@@ -6,7 +6,8 @@ import { Button } from 'primereact/button';
 import { Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import TextInput from "@assets/components/TextInput";
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, UserCircleIcon, KeyIcon } from "@heroicons/react/24/outline";
+import { useResizeHandler } from "hooks/useResizeHandler";
 
 const Signup = () => {
 
@@ -16,6 +17,8 @@ const Signup = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [errorType, setErrorType] = useState(1)
+
+    const [lstNameLogo, setLastNameLogo] = useState<JSX.Element>()
 
     const errors = {
         1: 'Empty First Name input!',
@@ -57,32 +60,37 @@ const Signup = () => {
         // }
     }
 
+    useResizeHandler({ use: 'logo', setLogo: setLastNameLogo, logo: <UserCircleIcon className="w-7" /> })
+
     return (
         <PageTemplate>
-            <Link to="/" className="self-start inline-flex items-center gap-2">
+            <Link to="/" className="self-start inline-flex items-center gap-2 mb-5">
                 <ArrowLeftIcon className="w-6" />
                 Back
             </Link>
 
             <form onSubmit={OnSubmit}>
-                <Card title="Signup" className="bg-transparent lg:w-1/2 xl:w-1/3 mx-auto text-center rounded-xl px-4">
-                    {/* First Name */}
-                    <TextInput
-                        logo={<EnvelopeIcon className="w-7" />}
-                        id="firstName"
-                        label="First Name"
-                        value={firstName}
-                        setValue={setFirstName}
-                    />
+                <Card title="Signup" className="bg-transparent md:w-3/4 lg:w-1/2 xl:w-2/5 mx-auto text-center rounded-xl px-4">
 
-                    {/* Last Name */}
-                    <TextInput
-                        logo={<EnvelopeIcon className="w-7" />}
-                        id="lastName"
-                        label="Last Name"
-                        value={lastName}
-                        setValue={setLastName}
-                    />
+                    <div className="sm:grid sm:grid-cols-2 sm:gap-4">
+                        {/* First Name */}
+                        <TextInput
+                            logo={<UserCircleIcon className="w-7" />}
+                            id="firstName"
+                            label="First Name"
+                            value={firstName}
+                            setValue={setFirstName}
+                        />
+
+                        {/* Last Name */}
+                        <TextInput
+                            logo={lstNameLogo}
+                            id="lastName"
+                            label="Last Name"
+                            value={lastName}
+                            setValue={setLastName}
+                        />
+                    </div>
 
                     {/* Email */}
                     <TextInput
@@ -95,7 +103,7 @@ const Signup = () => {
 
                     {/* Password */}
                     <TextInput
-                        logo={<EnvelopeIcon className="w-7" />}
+                        logo={<KeyIcon className="w-7" />}
                         id="password"
                         label="Password"
                         value={password}

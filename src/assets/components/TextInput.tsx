@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 
 interface Props {
     id: string
-    logo: JSX.Element
+    logo?: JSX.Element
     label: string
     value: string | undefined
     setValue: React.Dispatch<React.SetStateAction<string>>
@@ -13,14 +13,16 @@ interface Props {
 const TextInput = ({ logo, id, label, value, setValue, fieldsetClass }: Props) => {
     return (
         <fieldset className={`p-inputgroup mb-8 ${fieldsetClass}`}>
-            <span className="p-inputgroup-addon bg-violet-800/30">
-                {logo}
-            </span>
+            {logo &&
+                <span className="p-inputgroup-addon bg-violet-800/30">
+                    {logo}
+                </span>
+            }
 
             <FloatLabel>
                 <label htmlFor={id}>{label}</label>
                 <InputText
-                    className="flex items-center px-2 border-2 border-l-0 border-violet-800/30 focus:outline-none"
+                    className={`flex items-center px-2 border-2 border-l-0 border-violet-800/30 focus:outline-none ${logo ? '' : 'border-l-2 h-12'}`}
                     id={id}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
