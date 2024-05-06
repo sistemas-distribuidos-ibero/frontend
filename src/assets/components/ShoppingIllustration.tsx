@@ -22,7 +22,7 @@ const ShoppingIllustration = () => {
             <img ref={imageRef} src="/images/shopping.svg" alt="Web Shopping" className="w-9/12 lg:w-full xl:w-9/12 mx-auto" />
 
             {logos.map((logo, index) =>
-                <div key={index} className="floating absolute w-10 p-1 rounded-lg shadow-lg bg-white/10 backdrop-blur-sm text-violet-800" style={style}>
+                <div key={index} className="floating absolute w-7 sm:w-10 p-1 rounded-lg shadow-lg bg-white/10 backdrop-blur-sm text-violet-800" style={style}>
                     {logo}
                 </div>
             )}
