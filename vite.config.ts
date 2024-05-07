@@ -8,4 +8,7 @@ export default defineConfig({
     react(),
     tsconfigPaths()
   ],
+  server: {
+    host: true,
+  },
 })
