@@ -20,31 +20,31 @@ const Signup = () => {
 
     const [lstNameLogo, setLastNameLogo] = useState<JSX.Element>()
 
-    const errors = {
-        1: 'Empty First Name input!',
-        2: 'Empty Last Name input!',
-        3: 'Add an email!',
-        4: 'Empty Username input!',
-        5: 'Empty Password!',
-        6: 'Review the inputs or change Username!'
-    }
+    const errors = [
+        'Empty First Name input!',
+        'Empty Last Name input!',
+        'Add an email!',
+        'Empty Password!',
+        'Review the inputs or change Username!'
+    ]
 
     const OnSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
         if (firstName === '') {
+            setErrorType(0)
             setLogin(false)
         }
         else if (lastName === '') {
-            setErrorType(2)
+            setErrorType(1)
             setLogin(false)
         }
         else if (email === '') {
-            setErrorType(3)
+            setErrorType(2)
             setLogin(false)
         }
         else if (password === '') {
-            setErrorType(5)
+            setErrorType(4)
             setLogin(false)
         }
         // else {
@@ -54,7 +54,7 @@ const Signup = () => {
         //         goHome('/learn')
         //     }
         //     else {
-        //         setErrorType(6)
+        //         setErrorType(5)
         //         setLogin(false)
         //     }
         // }
