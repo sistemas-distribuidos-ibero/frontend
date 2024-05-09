@@ -1,43 +1,65 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DataScroller } from 'primereact/datascroller';
+import { Button } from 'primereact/button';
+import { Rating } from 'primereact/rating';
 import { Card } from "primereact/card";
-import { Button } from "primereact/button";
-
 import PageTemplate from "@assets/PageTemplate";
-import "@styles/floatingItem.css";
+
+type Product = {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    rating: number;
+    category: string;
+    image: string;
+};
 
 const Products = () => {
-    const productos = [
-        { id: 1, nombre: "Cámara Digital", descripcion: "Cámara de alta resolución 24MP", precio: 350 },
-        { id: 2, nombre: "Smartphone", descripcion: "Último modelo, pantalla 6.5 pulgadas, 5G", precio: 999 },
-        { id: 3, nombre: "Reloj Inteligente", descripcion: "Controla tu actividad física y recibe notificaciones", precio: 199 }
-    ];
+    const navigate = useNavigate();
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const mockProducts: Product[] = [
+            {
+                id: 1,
+                name: "Cámara Digital",
+                description: "Cámara de alta resolución 24MP, con capacidades de video 4K.",
+                price: 350,
+                rating: 5,
+                category: "Electronics",
+                image: 'camera.jpg'
+            },
+            {
+                id: 2,
+                name: "Smartphone",
+                description: "Último modelo, pantalla 6.5 pulgadas, 5G.",
+                price: 999,
+                rating: 4,
+                category: "Mobile",
+                image: 'phone.jpg'
+            }
+        ];
+        setProducts(mockProducts);
+    }, []);
+
+    const itemTemplate = (product: Product) => (
+        <Card title={product.name} subTitle={`$${product.price}`} className="mx-3 my-2" onClick={() => navigate(`/products/${product.id}`)}>
+            <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.name} style={{ width: '100%' }} />
+            <div>
+                <div className="text-700">{product.description}</div>
+                <Rating value={product.rating} readOnly cancel={false} />
+                <Button label="Add to Cart" icon="pi pi-shopping-cart" />
+            </div>
+        </Card>
+    );
 
     return (
         <PageTemplate needBack2Top>
-            <section className="py-24 lg:py-32 flex flex-col items-center bg-white">
-                <h1 className="text-5xl text-center pb-2">Explore Our Products</h1>
-                <p className="text-center text-xl italic text-violet-900">Discover <strong className="font-medium">innovation</strong> in every item!</p>
-            </section>
-
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-6">
-                    {productos.map(producto => (
-                        <Card key={producto.id} title={producto.nombre} subTitle={`$${producto.precio}`} className="shadow-xl hover:shadow-2xl">
-                            <p className="m-0">{producto.descripcion}</p>
-                        </Card>
-                    ))}
-                </div>
+            <div className="card">
+                <DataScroller value={products} itemTemplate={itemTemplate} rows={5} inline scrollHeight="500px" header="Scroll Down to Load More" />
             </div>
-
-            <div className="flex justify-center py-8">
-                <Button label="View More" className="p-button-rounded p-button-outlined" />
-            </div>
-            
-            <div className="flex justify-center">
-                <Link to="/" className="my-8 mx-auto border-4 rounded-lg border-violet-800 w-32 p-2 text-violet-900 hover:bg-violet-800 hover:text-white focus:bg-violet-800 focus:text-white text-center font-semibold tracking-wider">Back to Home</Link>
-            </div>
-
         </PageTemplate>
     );
 };
