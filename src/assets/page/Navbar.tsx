@@ -1,28 +1,53 @@
 import { Menubar } from 'primereact/menubar';
 import { MenuItem } from 'primereact/menuitem';
-import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon, QueueListIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import ButtonLink from '@assets/ButtonLink';
 import { useMemo } from 'react';
 
-const NavBar = () => {
+type props = {
+    isAdmin?: boolean
+}
+
+const tempU = [
+    {
+        label: 'Home',
+        icon: <HomeIcon className='w-7 pe-1' />,
+        url: '/',
+    },
+    {
+        label: 'Products',
+        icon: <TagIcon className='w-7 pe-1' />,
+        url: '/products',
+    },
+]
+
+const tempA = [
+    {
+        label: 'Products',
+        icon: <QueueListIcon className='w-7 pe-1' />,
+        url: '/admin/products',
+    },
+    {
+        label: 'Categories',
+        icon: <TagIcon className='w-7 pe-1' />,
+        url: '/admin/categories',
+    },
+]
+
+const NavBar = ( { isAdmin }: props ) => {
     // TODO bool to user verification
     const notUser = true
 
 
     const items: MenuItem[] = useMemo(() => {
-        const temp = [
-            {
-                label: 'Home',
-                icon: <HomeIcon className='w-7 pe-1' />,
-                url: '/',
-            },
-            {
-                label: 'Products',
-                icon: <TagIcon className='w-7 pe-1' />,
-                url: '/products',
-            },
-        ]
+        let temp: MenuItem[] = []
+        if (isAdmin) {
+            temp = tempA
+        }
+        else{
+            temp = tempU
+        }
 
         if (!notUser) {
             temp.push({
@@ -33,7 +58,7 @@ const NavBar = () => {
         }
 
         return temp
-    }, [notUser])
+    }, [notUser, isAdmin])
 
 
     {/* start={start} end={end} */ }

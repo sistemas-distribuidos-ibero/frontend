@@ -16,38 +16,46 @@ const Products = () => {
         const products: Product[] = [
             {
                 id: 1,
+                category: 1,
                 name: "Cámara Digital",
                 description: "Cámara de alta resolución 24MP, con capacidades de video 4K.",
+                stock: 10,
                 price: 350,
-                rating: 5,
-                category: "Electronics",
+                created: new Date(),
+                updated: new Date(),
                 image: 'camera.jpg'
             },
             {
                 id: 2,
+                category: 2,
                 name: "Smartphone",
                 description: "Último modelo, pantalla 6.5 pulgadas, 5G.",
+                stock: 2,
                 price: 999,
-                rating: 4,
-                category: "Mobile",
+                created: new Date(),
+                updated: new Date(),
                 image: './images/smartphone.jpg'
             },
             {
                 id: 3,
+                category: 1,
                 name: "Cámara Digital",
                 description: "Cámara de alta resolución 24MP, con capacidades de video 4K.",
+                stock: 10,
                 price: 350,
-                rating: 5,
-                category: "Electronics",
+                created: new Date(),
+                updated: new Date(),
                 image: 'camera.jpg'
             },
             {
                 id: 4,
+                category: 2,
                 name: "Smartphone",
                 description: "Último modelo, pantalla 6.5 pulgadas, 5G.",
+                stock: 2,
                 price: 999,
-                rating: 4,
-                category: "Mobile",
+                created: new Date(),
+                updated: new Date(),
                 image: './images/smartphone.jpg'
             }
         ];
