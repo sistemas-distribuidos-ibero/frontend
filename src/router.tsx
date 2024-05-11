@@ -3,6 +3,7 @@ import Home from "@pages/Home";
 import Login from "@pages/Login";
 import Signup from "@pages/Signup";
 import Products from "@pages/products/Products";
+import ProductDetail from "@pages/products/productdetail";
 import Me from "@pages/auth/Me";
 
 
@@ -26,5 +27,9 @@ export const router = createBrowserRouter([
     {
         path: "/me",
         element: <Me />
+    },
+    {
+        path: "/products/:productId",
+        element: <ProductDetail />
     }
-])
+]);
