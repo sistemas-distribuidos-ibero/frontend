@@ -13,10 +13,10 @@ import '@styles/main.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <SessionContextProvider>
-      <PrimeReactProvider value={{ appendTo: 'self' }}>
+    <PrimeReactProvider>
+      <SessionContextProvider>
         <RouterProvider router={router} />
-      </PrimeReactProvider>
-    </SessionContextProvider>
+      </SessionContextProvider>
+    </PrimeReactProvider>
   </React.StrictMode >,
 )

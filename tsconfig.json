@@ -36,6 +36,9 @@
         "assets/page/*",
         "assets/components/*",
       ],
+      "@hooks/*": [
+        "hooks/*",
+      ],
       "@styles/*": [
         "styles/*",
       ]

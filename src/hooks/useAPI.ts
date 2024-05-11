@@ -1,6 +1,6 @@
 export const useAPI = () => {
     const get_endpoint = (end_point: string) => {
-        const api_url = 'http://127.0.0.1:5000/api/v1/'
+        const api_url = 'http://127.0.0.1:8000/'
 
         return api_url + end_point
     }
