@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { Rating } from 'primereact/rating';
 import { Button } from 'primereact/button';
 import PageTemplate from "@assets/PageTemplate";
 import '@styles/floatingItem.css'; 
+import { Product } from 'models/ProductModel';
 
-
-type ProductDetails = {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    rating: number;
-    category: string;
-    image: string;
-};
 
 const ProductDetail = () => {
-    const { productId } = useParams<{ productId: string }>();
-    const [product, setProduct] = useState<ProductDetails | null>(null);
+    const { productId } = useParams<{ productId: number }>();
+    const [product, setProduct] = useState<Product | null>(null);
 
     useEffect(() => {
-        const mockDetails: ProductDetails[] = [
+        const mockDetails: Product[] = [
             {
-                id: '1',
+                id: 1,
                 name: "Cámara Digital",
                 description: "Cámara de alta resolución 24MP, con capacidades de video 4K.",
                 price: 350,
@@ -33,7 +24,7 @@ const ProductDetail = () => {
                 image: 'camera.jpg'
             },
             {
-                id: '2',
+                id: 2,
                 name: "Smartphone",
                 description: "Último modelo, pantalla 6.5 pulgadas, 5G.",
                 price: 999,
