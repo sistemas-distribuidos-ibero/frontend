@@ -54,7 +54,7 @@ const ModalCategory = ( { isVisible, setIsVisible, idCategoria, setIdCategoria, 
 
     return (
         <div className='flex justify-end'>
-            <Button className="border-2 rounded-lg border-green-600 text-green-600" icon="pi pi-plus" onClick={() => {setIdCategoria(-1); setIsVisible(true)}} />
+            <Button className="border-2 rounded-lg border-green-600 text-green-600 hover:bg-green-600 hover:text-white" icon="pi pi-plus" onClick={() => {setIdCategoria(-1); setIsVisible(true)}} />
             <Dialog className="w-1/2 h-auto" header="Nuevo Categoria" visible={isVisible} onHide={() => setIsVisible(false)}>
                 <form onSubmit={Submit}>
                     <div className="mb-4">
@@ -83,7 +83,8 @@ const ModalCategory = ( { isVisible, setIsVisible, idCategoria, setIdCategoria, 
                             required
                         />
                     </div>
-                    <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{idCategoria !== -1 ? 'Guardar' : 'Añadir Categoria'}</button>
+                    {/* <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{idCategoria !== -1 ? 'Guardar' : 'Añadir Categoria'}</button> */}
+                    <button type="submit" className="w-1/2 py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{idCategoria !== -1 ? 'Guardar' : 'Añadir Categoria'}</button>
                 </form>
             </Dialog>
         </div>

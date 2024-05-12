@@ -70,8 +70,8 @@ const AdminCategories = () => {
                                 <td>{category.created.toString()}</td>
                                 <td>{category.updated.toString()}</td>
                                 <th className="p-3">
-                                    <Button className="border-2 rounded-lg border-yellow-600 text-yellow-600" icon="pi pi-pencil" onClick={() => EditCategory(category.id)}/>
-                                    <Button className="mx-3 border-2 rounded-lg border-red-600 text-red-600" icon="pi pi-trash" onClick={() => DeleteCategory(category.id)}/>
+                                    <Button className="border-2 rounded-lg border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white" icon="pi pi-pencil" onClick={() => EditCategory(category.id)}/>
+                                    <Button className="mx-3 border-2 rounded-lg border-red-600 text-red-600 hover:bg-red-600 hover:text-white" icon="pi pi-trash" onClick={() => DeleteCategory(category.id)}/>
                                 </th>
                             </tr>
                     ))}

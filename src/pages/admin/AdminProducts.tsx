@@ -114,8 +114,8 @@ const AdminProducts = () => {
                                 <td>{producto.created.toString()}</td>
                                 <td>{producto.updated.toString()}</td>
                                 <th className="p-3">
-                                    <Button className="border-2 rounded-lg border-yellow-600 text-yellow-600" icon="pi pi-pencil" onClick={() => EditProduct(producto.id)}/>
-                                    <Button className="mx-3 border-2 rounded-lg border-red-600 text-red-600" icon="pi pi-trash" onClick={() => DeleteProduct(producto.id)}/>
+                                    <Button className="py-2 border-2 rounded-lg border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white" icon="pi pi-pencil" onClick={() => EditProduct(producto.id)}/>
+                                    <Button className="mx-3 py-2 border-2 rounded-lg border-red-600 text-red-600 hover:bg-red-600 hover:text-white" icon="pi pi-trash" onClick={() => DeleteProduct(producto.id)}/>
                                 </th>
                             </tr>
                     ))}

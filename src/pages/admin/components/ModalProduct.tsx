@@ -55,7 +55,7 @@ const ModalProduct = ( { isVisible, setIsVisible, idProducto, setIdProducto, pro
 
     return (
         <div className='flex justify-end'>
-            <Button className="border-2 rounded-lg border-green-600 text-green-600" icon="pi pi-plus" onClick={() => {setIdProducto(-1); setIsVisible(true)}} />
+            <Button className="border-2 rounded-lg border-green-600 text-green-600 hover:bg-green-600 hover:text-white" icon="pi pi-plus" onClick={() => {setIdProducto(-1); setIsVisible(true)}} />
             <Dialog className="w-1/2 h-auto" header="Nuevo Producto" visible={isVisible} onHide={() => setIsVisible(false)}>
                 <form onSubmit={Submit}>
                     <div className="mb-4">
