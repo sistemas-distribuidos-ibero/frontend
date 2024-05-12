@@ -1,4 +1,4 @@
-import { LegacyRef, useRef } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Stepper, StepperRefAttributes } from 'primereact/stepper';
@@ -13,34 +13,31 @@ import PageTemplate from "@assets/PageTemplate";
 import ShoppingIllustration from "@assets/ShoppingIllustration";
 
 import "@styles/floatingItem.css";
+import { useAPI } from "@hooks/useAPI";
 
 const Home = () => {
     const stepperRef = useRef<StepperRefAttributes | undefined>(undefined);
+    const { get } = useAPI();
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState<Category[]>([]);
 
-    const nada = [
-        "nada",
-        "nada",
-        "nada",
-        "nada",
-        "nada",
-        "nada",
-        "nada",
-        "nada",
-        "nada",
-    ]
+    useEffect(() => {
+        const getData = async () => {
+            const response = await get('products/1', '');
 
-    const nada2 = [
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-    ]
+            if (response) {
+                setProducts(response['products']);
+            }
+
+            const responseCategories = await get('categories', '');
+
+            if (responseCategories) {
+                setCategories(responseCategories['categories']);
+            }
+        }
+
+        getData();
+    }, []);
 
     const responsiveOptions = [
         {
@@ -65,12 +62,10 @@ const Home = () => {
         }
     ];
 
-    const productTemplate = (product: string) => {
+    const productTemplate = (product: Product) => {
         return (
-            <Card title="Nombre Producto" subTitle="Precio y cuanto cuesta" className="mx-3 my-2">
-                <p className="m-0">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam beatae neque debitis! {product}
-                </p>
+            <Card title={product.name} subTitle={`$${product.price}`} className="mx-3 my-2">
+                <p className="m-0">{product.description}</p>
             </Card>
         );
     };
@@ -128,7 +123,7 @@ const Home = () => {
             <hr />
 
             <section className="lg:grid lg:grid-cols-3 py-3 lg:py-8 lg:gap-8 my-3 lg:items-center">
-                <Carousel value={nada} numVisible={3}
+                <Carousel value={products} numVisible={3}
                     numScroll={1} className="lg:col-span-2"
                     itemTemplate={productTemplate}
                     autoplayInterval={3000}
@@ -147,11 +142,9 @@ const Home = () => {
                 <h2 className="text-2xl mb-6 text-center">Explore all our product categories</h2>
 
                 <div className="flex flex-wrap flex-row gap-x-20 gap-4 justify-center">
-                    {nada2.map((_item, i) =>
-                        <Fieldset key={i} legend="Header" toggleable collapsed className="border-2 w-72 text-center p-2">
-                            <p className="m-0">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis fugit reiciendis id quis facilis ab tenetur cum, tempore placeat facere doloribus dolores voluptatum repudiandae ipsam amet odit accusantium? Numquam, ipsa?
-                            </p>
+                    {categories.map((category) =>
+                        <Fieldset key={category._id} legend={category.name} toggleable collapsed className="border-2 w-72 text-center p-2">
+                            <p className="m-0">{category.description}</p>
                         </Fieldset>
                     )}
                 </div>
