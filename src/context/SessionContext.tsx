@@ -31,9 +31,14 @@ const SessionContextProvider = ({ children }: Props) => {
     }
 
     const signup = async (name: string, lastname: string, email: string, password: string) => {
-        const response = await post('register', '',
-            JSON.stringify({ name: name, lastname: lastname, email: email, password: password })
-        )
+        const response = await post('register', '', JSON.stringify(
+            {
+                name: name,
+                lastname: lastname,
+                email: email,
+                password: password
+            }
+        ))
 
         console.log(response)
 

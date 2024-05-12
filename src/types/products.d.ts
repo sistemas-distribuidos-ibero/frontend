@@ -1,6 +1,8 @@
-export type Product = {
-    id: string;
-    category: string;
+type Product = {
+    [k: string]: string | number
+
+    _id: string;
+    id_category: string;
     name: string;
     description: string;
     stock: number;
@@ -9,8 +11,8 @@ export type Product = {
     updated: Date;
 };
 
-export type Category = {
-    id: string;
+type Category = {
+    _id: string;
     name: string;
     description: string;
     fields: string[];

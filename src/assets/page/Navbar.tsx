@@ -12,7 +12,7 @@ const NavBar = () => {
     const context = useSessionContext()
     const navigator = useNavigate()
 
-    const isAdmin = true
+    const isAdmin = false
 
     const items: MenuItem[] = useMemo(() => {
         if (isAdmin) {
