@@ -4,7 +4,9 @@ import Login from "@pages/Login";
 import Signup from "@pages/Signup";
 import Products from "@pages/products/Products";
 import ProductDetail from "@pages/products/productdetail";
-import Me from "@pages/auth/Me";
+import Me from "@pages/Me";
+import Pay from "@pages/Pay";
+import Success from "@pages/cart/Success";
 
 
 export const router = createBrowserRouter([
@@ -31,5 +33,13 @@ export const router = createBrowserRouter([
     {
         path: "/products/:productId",
         element: <ProductDetail />
+    },
+    {
+        path: "/cart/pay",
+        element: <Pay />
+    },
+    {
+        path: "/cart/success",
+        element: <Success />
     }
 ]);
