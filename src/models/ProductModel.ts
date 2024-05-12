@@ -8,6 +8,7 @@ export type Product = {
     created: Date;
     updated: Date;
     image: string;
+    rating: number;
 };
 
 export type Category = {

@@ -1,6 +1,8 @@
 import PageTemplate from "@assets/page/PageTemplate";
 import { Category } from "models/ProductModel";
+import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
+import ModalCategory from "./components/ModalCategory";
 
 export const categorias: Category[] = [
     {
@@ -21,30 +23,33 @@ export const categorias: Category[] = [
 
 const AdminCategories = () => {
     const [categories, setCategories] = useState<Category[]>([]);
-    const [nuevaCategoria, setNuevaCategoria] = useState<Category>({ id: 0, name: '', description: '', created: new Date(), updated: new Date() });
-
+    const [isVisible, setIsVisible] = useState(false);
+    const [idCategory, setIdCategory] = useState(-1);
 
     useEffect(() => {
 
         setCategories(categorias);
     }, [])
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = event.target;
-        setNuevaCategoria(prevState => ({ ...prevState, [name]: value }));
-    };
+    const DeleteCategory = (id: number) => {
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setNuevaCategoria(prevState => ({ ...prevState, created: new Date(), updated: new Date() }));
-        setCategories(prevState => [...prevState, { ...nuevaCategoria, id: categories.length + 1 }]);
-        setNuevaCategoria({ id: 0, name: '', description: '', created: new Date(), updated: new Date() });
-    };
+        setCategories(prevState => prevState.filter(category => category.id !== id));
+    }
+
+    const EditCategory = (id: number) => {
+        setIdCategory(id);
+        setIsVisible(true);
+    }
 
     return (
         <PageTemplate needBack2Top isAdmin={true}>
             <div className="p-5 text-center">
                 <h2 className="text-2xl mb-5">Categories</h2>
+                
+                <div className="m-5">
+                    <ModalCategory isVisible={isVisible} setIsVisible={setIsVisible} idCategoria={idCategory} setIdCategoria={setIdCategory} categorias={categories} setCategorias={setCategories} />
+                </div>
+                
                 <table className="table-fixed w-full">
                     <thead>
                     <tr>
@@ -53,6 +58,7 @@ const AdminCategories = () => {
                         <th>Description</th>
                         <th>Created</th>
                         <th>Updated</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody className="text-center border">
@@ -63,43 +69,14 @@ const AdminCategories = () => {
                                 <td>{category.description}</td>
                                 <td>{category.created.toString()}</td>
                                 <td>{category.updated.toString()}</td>
+                                <th className="p-3">
+                                    <Button className="border-2 rounded-lg border-yellow-600 text-yellow-600" icon="pi pi-pencil" onClick={() => EditCategory(category.id)}/>
+                                    <Button className="mx-3 border-2 rounded-lg border-red-600 text-red-600" icon="pi pi-trash" onClick={() => DeleteCategory(category.id)}/>
+                                </th>
                             </tr>
                     ))}
                     </tbody>
                 </table>
-                
-                <div className="p-5 max-w-md mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
-                    <h2 className="text-lg font-semibold mb-4">Añadir Nueva Categoria</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
-                            <label htmlFor="name" className="block text-sm font-medium mb-1">Nombre:</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={nuevaCategoria.name}
-                                onChange={handleInputChange}
-                                className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Nombre del producto"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="description" className="block text-sm font-medium mb-1">Descripción:</label>
-                            <input
-                                type="text"
-                                id="description"
-                                name="description"
-                                value={nuevaCategoria.description}
-                                onChange={handleInputChange}
-                                className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Descripción del producto"
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Añadir Categoria</button>
-                    </form>
-                </div>
             </div>
         </PageTemplate>
     );

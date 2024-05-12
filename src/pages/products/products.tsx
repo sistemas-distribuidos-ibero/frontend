@@ -23,7 +23,8 @@ const Products = () => {
                 price: 350,
                 created: new Date(),
                 updated: new Date(),
-                image: 'camera.jpg'
+                image: 'camera.jpg',
+                rating: 0
             },
             {
                 id: 2,
@@ -34,7 +35,8 @@ const Products = () => {
                 price: 999,
                 created: new Date(),
                 updated: new Date(),
-                image: './images/smartphone.jpg'
+                image: './images/smartphone.jpg',
+                rating: 0
             },
             {
                 id: 3,
@@ -45,7 +47,8 @@ const Products = () => {
                 price: 350,
                 created: new Date(),
                 updated: new Date(),
-                image: 'camera.jpg'
+                image: 'camera.jpg',
+                rating: 0
             },
             {
                 id: 4,
@@ -56,7 +59,8 @@ const Products = () => {
                 price: 999,
                 created: new Date(),
                 updated: new Date(),
-                image: './images/smartphone.jpg'
+                image: './images/smartphone.jpg',
+                rating: 0
             }
         ];
         setProducts(products);
