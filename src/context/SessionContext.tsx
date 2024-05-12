@@ -2,6 +2,7 @@ import React from "react";
 import { useAPI } from "hooks/useAPI";
 
 export const SessionContext = React.createContext<SessionContextModel>({
+    setUser: () => { },
     login: () => Promise.resolve(false),
     signup: () => Promise.resolve(false),
     logout: () => { },
@@ -57,6 +58,7 @@ const SessionContextProvider = ({ children }: Props) => {
 
     const sessionContext: SessionContextModel = {
         user,
+        setUser,
         login,
         signup,
         logout

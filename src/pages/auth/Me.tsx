@@ -1,6 +1,7 @@
 import TextInput from "@assets/components/TextInput";
 import PageTemplate from "@assets/page/PageTemplate";
 import { CheckIcon, PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAPI } from "@hooks/useAPI";
 import { useSessionContext } from "@hooks/useSessionContext";
 import { Button } from "primereact/button";
 import { FormEvent, useState } from "react";
@@ -9,10 +10,37 @@ const Me = () => {
     const context = useSessionContext()
     const [editing, setEditing] = useState(false)
 
-    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        console.log("s");
+    const { put } = useAPI()
 
+
+    const [firstName, setFirstName] = useState(context.user?.name)
+    const [lastName, setLastName] = useState(context.user?.lastname)
+    const [email, setEmail] = useState(context.user?.email)
+
+    const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+
+        const body: {
+            name?: string
+            lastname?: string
+            email?: string
+        } = {}
+
+        if (firstName) {
+            body['name'] = firstName
+        }
+        if (lastName) {
+            body['lastname'] = lastName
+        }
+        if (email) {
+            body['email'] = email
+        }
+
+        const response = await put('users/update/' + context.user?.id, '', JSON.stringify(body))
+
+        context.setUser(response.user)
+
+        setEditing(false)
     }
 
     return (
@@ -38,20 +66,20 @@ const Me = () => {
                 </header>
                 <div className="sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-4 mt-6">
                     <TextInput
-                        value={context.user?.name}
-                        setValue={() => { }}
+                        value={firstName}
+                        setValue={editing ? setFirstName : () => { }}
                         label="Name"
                         id="name"
                     />
                     <TextInput
-                        value={context.user?.lastname}
-                        setValue={() => { }}
+                        value={lastName}
+                        setValue={editing ? setLastName : () => { }}
                         label="Last Name"
                         id="lastname"
                     />
                     <TextInput
-                        value={context.user?.email}
-                        setValue={() => { }}
+                        value={email}
+                        setValue={editing ? setEmail : () => { }}
                         label="Email"
                         id="email"
                     />

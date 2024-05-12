@@ -7,7 +7,7 @@ interface Props {
     logo?: JSX.Element
     label: string
     value: string | undefined
-    setValue: React.Dispatch<React.SetStateAction<string>>
+    setValue: React.Dispatch<React.SetStateAction<string>> | React.Dispatch<React.SetStateAction<string | undefined>>
     fieldsetClass?: string
     inputClass?: string
     disabled?: boolean
