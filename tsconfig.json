@@ -30,11 +30,15 @@
         "pages/*",
         "pages/home/*",
         "pages/auth/*",
+        "pages/cart/*",
       ],
       "@assets/*": [
         "assets/*",
         "assets/page/*",
         "assets/components/*",
+      ],
+      "@hooks/*": [
+        "hooks/*",
       ],
       "@styles/*": [
         "styles/*",

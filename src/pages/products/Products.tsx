@@ -84,13 +84,13 @@ const Products = () => {
                         <Filters />
 
                     </div>
-                    
+
                     {/* Productos */}
                     <div className="gap-4">
-                       
+
                         <div className="grid grid-cols-3 gap-4">
                             {products.map(producto => (
-                                
+
                                 <CardProduct key={producto.id} producto={producto} />
 
                             ))}

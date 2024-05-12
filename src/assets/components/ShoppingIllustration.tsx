@@ -1,5 +1,5 @@
 import { BookOpenIcon, CameraIcon, DevicePhoneMobileIcon, GiftIcon, PencilIcon } from '@heroicons/react/24/outline';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useResizeHandler } from 'hooks/useResizeHandler';
 
 const ShoppingIllustration = () => {
@@ -15,6 +15,25 @@ const ShoppingIllustration = () => {
     const [style, setStyle] = useState({})
 
     useResizeHandler({ use: 'animation', setStyle, imageRef })
+
+    useEffect(() => {
+        if (imageRef.current) {
+            const image = imageRef.current
+            let heightFactor = 2.8
+            let widthFactor = 1.8
+
+            if (window.innerWidth > 1007 && window.innerWidth < 1280) {
+                heightFactor = 3
+                widthFactor = 2.5
+            }
+
+            setStyle({
+                'top': image.height / heightFactor,
+                'left': image.width / widthFactor,
+                'offsetPath': `path('M 0 0 A 10 16 0 0 1 ${image.width / 3.95} ${image.height / 2.1}')`
+            })
+        }
+    }, [])
 
     return (
 
