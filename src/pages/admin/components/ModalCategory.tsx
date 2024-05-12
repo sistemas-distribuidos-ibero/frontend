@@ -1,4 +1,4 @@
-import { Category } from 'models/ProductModel';
+import TextInput from '@assets/components/TextInput';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { useEffect, useState } from 'react';
@@ -6,85 +6,71 @@ import { useEffect, useState } from 'react';
 type props = {
     isVisible: boolean;
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    idCategoria: number;
-    setIdCategoria: React.Dispatch<React.SetStateAction<number>>;
+    idCategoria: string;
+    setIdCategoria: React.Dispatch<React.SetStateAction<string>>;
     categorias: Category[];
     setCategorias: React.Dispatch<React.SetStateAction<Category[]>>;
 }
 
 const ModalCategory = ( { isVisible, setIsVisible, idCategoria, setIdCategoria, categorias, setCategorias }: props) => {
 
-    const [nuevaCategoria, setNuevaCategoria] = useState<Category>({ id: 0, name: '', description: '', created: new Date(), updated: new Date() });
-
-    const OnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = event.target;
-        setNuevaCategoria(prevState => ({ ...prevState, [name]: value }));
-    };
+    const [name, setName] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [fields, setFields] = useState<string>('');
 
     useEffect(() => {
 
-        if (idCategoria !== -1) {
-            setNuevaCategoria(categorias.find(categoria => categoria.id === idCategoria)!);
+        if (idCategoria !== '') {
+            setName(categorias.find(categoria => categoria._id === idCategoria)!.name);
+            setDescription(categorias.find(categoria => categoria._id === idCategoria)!.description);
+            setFields(categorias.find(categoria => categoria._id === idCategoria)!.fields.join(', '));
         }
         else{
-            setNuevaCategoria({ id: 0, name: '', description: '', created: new Date(), updated: new Date() });
+            setName('');
+            setDescription('');
+            setFields('');
         }
 
     }, [isVisible])
 
     const Submit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (idCategoria === -1) {
-            setNuevaCategoria(prevState => ({ ...prevState, created: new Date(), updated: new Date() }));
-            setCategorias(prevState => [...prevState, { ...nuevaCategoria, id: categorias.length + 1 }]);
+        
+        if (idCategoria === '') {
+            setCategorias([...categorias, {_id: (categorias.length + 1).toString(), name, description, fields: fields.split(', '), created: new Date(), updated: new Date()}]);
         }
         else{
-            setNuevaCategoria(prevState => ({ ...prevState, updated: new Date() }));
+            const update = new Date();
             
             let temp = categorias;
             
-            temp[idCategoria-1] = nuevaCategoria;
+            temp[parseInt(idCategoria)-1].name = name;
+            temp[parseInt(idCategoria)-1].description = description;
+            temp[parseInt(idCategoria)-1].fields = fields.split(', ');
+            temp[parseInt(idCategoria)-1].updated = update;
 
             setCategorias(temp);
         }
 
         setIsVisible(false);
-        setIdCategoria(-1);
+        setIdCategoria('');
     };
 
     return (
-        <div className='flex justify-end'>
-            <Button className="border-2 rounded-lg border-green-600 text-green-600 hover:bg-green-600 hover:text-white" icon="pi pi-plus" onClick={() => {setIdCategoria(-1); setIsVisible(true)}} />
-            <Dialog className="w-1/2 h-auto" header="Nuevo Categoria" visible={isVisible} onHide={() => setIsVisible(false)}>
-                <form onSubmit={Submit}>
+        <div className='flex justify-end rounded-lg shadow-2xl'>
+            <Button className="border-2 rounded-lg border-green-600 text-green-600 hover:bg-green-600 hover:text-white" icon="pi pi-plus" onClick={() => {setIdCategoria(''); setIsVisible(true)}} />
+            <Dialog className="w-1/2 h-auto text-center" header="Nuevo Categoria" visible={isVisible} onHide={() => setIsVisible(false)}>
+                <form onSubmit={Submit} className='my-2'>
                     <div className="mb-4">
-                        <label htmlFor="name" className="block text-sm font-medium mb-1">Nombre:</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={nuevaCategoria.name}
-                            onChange={OnChange}
-                            className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Nombre del Categoria"
-                            required
-                        />
+                        <TextInput id='name' label='Name' value={name} setValue={setName}/>
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="description" className="block text-sm font-medium mb-1">Descripción:</label>
-                        <input
-                            type="text"
-                            id="description"
-                            name="description"
-                            value={nuevaCategoria.description}
-                            onChange={OnChange}
-                            className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Descripción del Categoria"
-                            required
-                        />
+                        <TextInput id='description' label='Description' value={description} setValue={setDescription}/>
                     </div>
-                    {/* <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{idCategoria !== -1 ? 'Guardar' : 'Añadir Categoria'}</button> */}
-                    <button type="submit" className="w-1/2 py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{idCategoria !== -1 ? 'Guardar' : 'Añadir Categoria'}</button>
+                    <div className="mb-4">
+                        <TextInput id='fields' label='Fields' value={fields} setValue={setFields}/>
+                    </div>
+                    <button type="submit" className="w-1/2 py-2 px-4 border border-blue-500 rounded-md shadow-sm text-blue-500 hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">{idCategoria !== '' ? 'Guardar' : 'Añadir Categoria'}</button>
                 </form>
             </Dialog>
         </div>
