@@ -6,19 +6,10 @@ import { Button } from 'primereact/button';
 import PageTemplate from "@assets/PageTemplate";
 import '@styles/floatingItem.css';
 
-type ProductDetails = {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    rating: number;
-    category: string;
-    image: string;
-};
 
 const ProductDetail = () => {
-    const { productId } = useParams<{ productId: string }>();
-    const [product, setProduct] = useState<ProductDetails | null>(null);
+    const { productId } = useParams<{ productId: number }>();
+    const [product, setProduct] = useState<Product | null>(null);
 
     useEffect(() => {
         const fetchProduct = async () => {

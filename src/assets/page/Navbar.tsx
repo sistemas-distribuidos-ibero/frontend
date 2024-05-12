@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';
 import { MenuItem } from 'primereact/menuitem';
+import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon, QueueListIcon, UserMinusIcon } from '@heroicons/react/24/outline';
 import { SplitButton } from 'primereact/splitbutton';
-import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon, UserMinusIcon } from '@heroicons/react/24/outline';
 
 import ButtonLink from '@assets/ButtonLink';
 import { useSessionContext } from '@hooks/useSessionContext';
@@ -12,29 +12,47 @@ const NavBar = () => {
     const context = useSessionContext()
     const navigator = useNavigate()
 
+    const isAdmin = true
+
     const items: MenuItem[] = useMemo(() => {
-        const temp = [
-            {
-                label: 'Home',
-                icon: <HomeIcon className='w-7 pe-1' />,
-                command: () => navigator('/')
-            },
-            {
-                label: 'Products',
-                icon: <TagIcon className='w-7 pe-1' />,
-                command: () => navigator('/products')
-            },
-        ]
-
-        if (context.user) {
-            temp.push({
-                label: 'My Orders',
-                icon: <ArchiveBoxIcon className='w-7 pe-1' />,
-                command: () => navigator('/orders')
-            })
+        if (isAdmin) {
+            return [
+                {
+                    label: 'Products',
+                    icon: <QueueListIcon className='w-7 pe-1' />,
+                    command: () => navigator('/admin/products')
+                },
+                {
+                    label: 'Categories',
+                    icon: <TagIcon className='w-7 pe-1' />,
+                    command: () => navigator('/admin/categories')
+                },
+            ]
         }
+        else {
+            const temp = [
+                {
+                    label: 'Home',
+                    icon: <HomeIcon className='w-7 pe-1' />,
+                    command: () => navigator('/')
+                },
+                {
+                    label: 'Products',
+                    icon: <TagIcon className='w-7 pe-1' />,
+                    command: () => navigator('/products')
+                },
+            ]
 
-        return temp
+            if (context.user) {
+                temp.push({
+                    label: 'My Orders',
+                    icon: <ArchiveBoxIcon className='w-7 pe-1' />,
+                    command: () => navigator('/orders')
+                })
+            }
+
+            return temp
+        }
     }, [context.user, navigator])
 
 
