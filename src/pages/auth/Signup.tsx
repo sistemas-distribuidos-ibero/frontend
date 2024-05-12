@@ -1,15 +1,19 @@
 import PageTemplate from "@assets/page/PageTemplate";
-import { FormEvent, useState } from "react";
 
+import { FormEvent, useState } from "react";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { Link } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeftIcon, EnvelopeIcon, UserCircleIcon, KeyIcon } from "@heroicons/react/24/outline";
+
 import TextInput from "@assets/components/TextInput";
-import { EnvelopeIcon, UserCircleIcon, KeyIcon } from "@heroicons/react/24/outline";
-import { useResizeHandler } from "hooks/useResizeHandler";
+import { useResizeHandler } from "@hooks/useResizeHandler";
+import { useSessionContext } from "@hooks/useSessionContext";
 
 const Signup = () => {
+
+    const context = useSessionContext()
+    const navigator = useNavigate()
 
     const [loginCorrect, setLogin] = useState(true)
     const [firstName, setFirstName] = useState("")
@@ -25,7 +29,8 @@ const Signup = () => {
         'Empty Last Name input!',
         'Add an email!',
         'Empty Password!',
-        'Review the inputs or change Username!'
+        'Review the inputs or change Username!',
+        'Something went wrong!'
     ]
 
     const OnSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -47,17 +52,18 @@ const Signup = () => {
             setErrorType(4)
             setLogin(false)
         }
-        // else {
-        //     const res = await session.signup(firstName, lastName, email, username, password, new Date(), new Date(), false);
-        //     console.log(res)
-        //     if (res === true){
-        //         goHome('/learn')
-        //     }
-        //     else {
-        //         setErrorType(5)
-        //         setLogin(false)
-        //     }
-        // }
+        else {
+            const res = await context.signup(firstName, lastName, email, password);
+            console.log(res)
+
+            if (res === true) {
+                navigator('/')
+            }
+            else {
+                setErrorType(5)
+                setLogin(false)
+            }
+        }
     }
 
     useResizeHandler({ use: 'logo', setLogo: setLastNameLogo, logo: <UserCircleIcon className="w-7" /> })

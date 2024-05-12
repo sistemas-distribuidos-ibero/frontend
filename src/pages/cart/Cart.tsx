@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { Rating } from 'primereact/rating';
 import { Card } from "primereact/card";
 import PageTemplate from "@assets/PageTemplate";
-import { useProducts } from '@hooks/useProducts.ts';
+import { useCart } from '@hooks/useCart.ts';
 
 type Product = {
     id: number;
@@ -17,13 +17,13 @@ type Product = {
     image: string;
 };
 
-const Products = () => {
+const Cart = () => {
     const navigate = useNavigate();
-    const { products, fetchProducts } = useProducts(); // Destructuring to get the fetchProducts method
+    const { cartItems, fetchCart } = useCart(); // Destructuring to get cartItems directly
 
     useEffect(() => {
-        fetchProducts(); // Fetch products from the server on component mount
-    }, [fetchProducts]);
+        fetchCart(); // Fetch products from the server on component mount
+    }, [fetchCart]);
 
     const itemTemplate = (product: Product) => (
         <Card title={product.name} subTitle={`$${product.price}`} className="mx-3 my-2" onClick={() => navigate(`/products/${product.id}`)}>
@@ -40,10 +40,10 @@ const Products = () => {
     return (
         <PageTemplate needBack2Top>
             <div className="card">
-                <DataScroller value={products} itemTemplate={itemTemplate} rows={5} inline scrollHeight="500px" header="Scroll Down to Load More" />
+                <DataScroller value={cartItems} itemTemplate={itemTemplate} rows={5} inline scrollHeight="500px" header="Scroll Down to Load More" />
             </div>
         </PageTemplate>
     );
 };
 
-export default Products;
+export default Cart;

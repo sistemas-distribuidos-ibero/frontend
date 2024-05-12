@@ -1,39 +1,41 @@
+import { useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';
 import { MenuItem } from 'primereact/menuitem';
-import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { SplitButton } from 'primereact/splitbutton';
+import { HomeIcon, TagIcon, UserPlusIcon, UserIcon, UserCircleIcon, ShoppingCartIcon, ArchiveBoxIcon, UserMinusIcon } from '@heroicons/react/24/outline';
+
 import ButtonLink from '@assets/ButtonLink';
-import { useMemo } from 'react';
+import { useSessionContext } from '@hooks/useSessionContext';
 
 const NavBar = () => {
-    // TODO bool to user verification
-    const notUser = true
-
+    const context = useSessionContext()
+    const navigator = useNavigate()
 
     const items: MenuItem[] = useMemo(() => {
         const temp = [
             {
                 label: 'Home',
                 icon: <HomeIcon className='w-7 pe-1' />,
-                url: '/',
+                command: () => navigator('/')
             },
             {
                 label: 'Products',
                 icon: <TagIcon className='w-7 pe-1' />,
-                url: '/products',
+                command: () => navigator('/products')
             },
         ]
 
-        if (!notUser) {
+        if (context.user) {
             temp.push({
                 label: 'My Orders',
                 icon: <ArchiveBoxIcon className='w-7 pe-1' />,
-                url: '/orders',
+                command: () => navigator('/orders')
             })
         }
 
         return temp
-    }, [notUser])
+    }, [context.user, navigator])
 
 
     {/* start={start} end={end} */ }
@@ -49,9 +51,30 @@ const NavBar = () => {
             model={items}
 
             end={
-                <section className='flex gap-2' >
+                <section className='flex md:gap-2' >
                     {
-                        notUser ? (
+                        context.user ? (
+                            <>
+                                <ButtonLink to='/cart'>
+                                    <ShoppingCartIcon className='w-7 pe-1' />
+                                    Cart
+                                </ButtonLink>
+
+                                <SplitButton
+                                    label={`Hello, ${context.user.name}`}
+                                    icon={<UserCircleIcon className='w-7 pe-1' />}
+                                    onClick={() => navigator('/me')}
+                                    model={[{
+                                        label: 'Logout',
+                                        icon: <UserMinusIcon className='w-8 pe-2' />,
+                                        command: () => {
+                                            context.logout()
+                                            navigator('/')
+                                        }
+                                    }]}
+                                />
+                            </>
+                        ) : (
                             <>
                                 <ButtonLink to='/signup'>
                                     <UserPlusIcon className='w-7 pe-1' />
@@ -60,17 +83,6 @@ const NavBar = () => {
                                 <ButtonLink to='/login'>
                                     <UserIcon className='w-7 pe-1' />
                                     Login
-                                </ButtonLink>
-                            </>
-                        ) : (
-                            <>
-                                <ButtonLink to='/cart'>
-                                    <ShoppingCartIcon className='w-7 pe-1' />
-                                    Cart
-                                </ButtonLink>
-                                <ButtonLink to='/me'>
-                                    <UserCircleIcon className='w-7 pe-1' />
-                                    Profile
                                 </ButtonLink>
                             </>
                         )}

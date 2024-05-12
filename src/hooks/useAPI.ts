@@ -1,97 +1,40 @@
 export const useAPI = () => {
-    const get_endpoint = (end_point: string) => {
-        const api_url = 'http://127.0.0.1:5000/api/v1/'
+    const api_url = 'http://127.0.0.1:8000/'
 
-        return api_url + end_point
-    }
+    const get_endpoint = (endPoint: string) => {
+        return api_url + endPoint;
+    };
 
-    const get = async (end_point: string, token: string) => {
-        const response = await fetch(get_endpoint(end_point), {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + token
+    const fetchAPI = async (endPoint: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', body?: string) => {
+        const headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        const options: RequestInit = {
+            method: method,
+            headers: headers
+        };
+
+        if (body) {
+            options.body = body;
+        }
+
+        try {
+            const response = await fetch(get_endpoint(endPoint), options);
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
             }
-        })
-
-        if (response.ok) {
-            const data = await response.json()
-
-            return data
+            return await response.json();
+        } catch (error) {
+            console.error('Fetch error:', error);
+            return null; // Return null to indicate failure in a more predictable way
         }
-        else {
-            return false
-        }
+    };
 
-    }
+    const get = (endPoint: string) => fetchAPI(endPoint, 'GET');
+    const post = (endPoint: string, body: string) => fetchAPI(endPoint, 'POST', body);
+    const put = (endPoint: string, body: string) => fetchAPI(endPoint, 'PUT', body);
+    const delet = (endPoint: string) => fetchAPI(endPoint, 'DELETE');
 
-    const post = async (end_point: string, token: string, body: string) => {
-        const response = await fetch(get_endpoint(end_point), {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: body
-        })
-
-        if (response.ok) {
-            const data = await response.json()
-
-            return data
-        }
-        else {
-            return false
-        }
-
-    }
-
-    const put = async (end_point: string, token: string, body: string) => {
-
-        const response = await fetch(get_endpoint(end_point), {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: body
-        })
-
-        if (response.ok) {
-            const data = await response.json()
-
-            return data
-        }
-        else {
-            return false
-        }
-
-    }
-
-    const delet = async (end_point: string, token: string) => {
-        const response = await fetch(get_endpoint(end_point), {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            },
-        })
-
-        if (response.ok) {
-            const data = await response.json()
-
-            return data
-        }
-        else {
-            return false
-        }
-
-    }
-
-
-    return {
-        get_endpoint,
-        get,
-        post,
-        put,
-        delet
-    }
-}
+    return { get_endpoint, get, post, put, delet };
+};

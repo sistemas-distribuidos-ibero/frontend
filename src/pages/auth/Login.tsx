@@ -1,12 +1,13 @@
 import PageTemplate from "@assets/page/PageTemplate";
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ArrowLeftIcon, KeyIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import TextInput from "@assets/components/TextInput";
+import { useSessionContext } from "@hooks/useSessionContext";
 
 const Login = () => {
 
@@ -14,18 +15,20 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [loginCorrect, setLogin] = useState(true)
 
+    const navigator = useNavigate()
+    const context = useSessionContext()
+
     const OnSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-        // const res = await context.login(email, password);
+        const res = await context.login(email, password);
 
-        // console.log(res)
-        // if (res == true){
-        //     goHome('/learn')
-        // }
-        // else{
-        setLogin(false)
-        // }
+        if (res == true) {
+            navigator('/')
+        }
+        else {
+            setLogin(false)
+        }
     }
 
     return (
@@ -48,7 +51,7 @@ const Login = () => {
 
                     <TextInput
                         logo={<KeyIcon className="w-7" />}
-                        id="password"
+                        id="pass"
                         label="Password"
                         value={password}
                         setValue={setPassword}
