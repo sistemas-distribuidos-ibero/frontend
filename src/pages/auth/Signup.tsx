@@ -3,7 +3,7 @@ import PageTemplate from "@assets/page/PageTemplate";
 import { FormEvent, useState } from "react";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon, EnvelopeIcon, UserCircleIcon, KeyIcon } from "@heroicons/react/24/outline";
 
 import TextInput from "@assets/components/TextInput";
@@ -11,6 +11,8 @@ import { useResizeHandler } from "@hooks/useResizeHandler";
 import { useSessionContext } from "@hooks/useSessionContext";
 
 const Signup = () => {
+
+    const { redirect } = useParams()
 
     const context = useSessionContext()
     const navigator = useNavigate()
@@ -54,10 +56,14 @@ const Signup = () => {
         }
         else {
             const res = await context.signup(firstName, lastName, email, password);
-            console.log(res)
 
             if (res === true) {
-                navigator('/')
+                if (redirect) {
+                    navigator('/products/' + redirect)
+                }
+                else {
+                    navigator('/')
+                }
             }
             else {
                 setErrorType(5)
@@ -70,7 +76,7 @@ const Signup = () => {
 
     return (
         <PageTemplate>
-            <Link to="/" className="self-start inline-flex items-center gap-2 mb-5">
+            <Link to={redirect ? "/products/" + redirect : "/"} className="self-start inline-flex items-center gap-2 mb-5">
                 <ArrowLeftIcon className="w-6" />
                 Back
             </Link>
@@ -126,7 +132,7 @@ const Signup = () => {
 
                     <p>
                         Already have an account?
-                        <Link to="/login" className="text-violet-800 ms-1 border-b-2 border-violet-800/80">
+                        <Link to={redirect ? "/login/" + redirect : "/login"} className="text-violet-800 ms-1 border-b-2 border-violet-800/80">
                             Login here!
                         </Link>
                     </p>

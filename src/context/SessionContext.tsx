@@ -43,6 +43,7 @@ const SessionContextProvider = ({ children }: Props) => {
         console.log(response)
 
         if (response) {
+            setUser(response.user)
             return true
         }
         else {

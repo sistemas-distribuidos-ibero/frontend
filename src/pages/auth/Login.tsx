@@ -1,6 +1,6 @@
 import PageTemplate from "@assets/page/PageTemplate";
 import { FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { ArrowLeftIcon, KeyIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 
@@ -10,6 +10,8 @@ import TextInput from "@assets/components/TextInput";
 import { useSessionContext } from "@hooks/useSessionContext";
 
 const Login = () => {
+
+    const { redirect } = useParams()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,7 +26,12 @@ const Login = () => {
         const res = await context.login(email, password);
 
         if (res == true) {
-            navigator('/')
+            if (redirect) {
+                navigator('/products/' + redirect)
+            }
+            else {
+                navigator('/')
+            }
         }
         else {
             setLogin(false)
@@ -33,7 +40,7 @@ const Login = () => {
 
     return (
         <PageTemplate>
-            <Link to="/" className="self-start inline-flex items-center gap-2 mb-5">
+            <Link to={redirect ? "/products/" + redirect : "/"} className="self-start inline-flex items-center gap-2 mb-5">
                 <ArrowLeftIcon className="w-6" />
                 Back
             </Link>
@@ -70,7 +77,7 @@ const Login = () => {
 
                     <p>
                         Don't have an account yet?
-                        <Link to="/signup" className="text-violet-800 ms-1 border-b-2 border-violet-800/80">
+                        <Link to={redirect ? "/signup/" + redirect : "/signup"} className="text-violet-800 ms-1 border-b-2 border-violet-800/80">
                             Sign up here!
                         </Link>
                     </p>

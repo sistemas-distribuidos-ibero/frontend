@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, FormEvent } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import PageTemplate from "@assets/PageTemplate";
 import { useAPI } from '@hooks/useAPI';
 import { Carousel } from 'primereact/carousel';
@@ -7,6 +7,7 @@ import CardProduct from './components/CardProduct';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { useSessionContext } from '@hooks/useSessionContext';
 
 
 const ProductDetail = () => {
@@ -17,6 +18,9 @@ const ProductDetail = () => {
     const [products, setProducts] = useState<Product[]>([]);
 
     const [quantity, setQuantity] = useState(1);
+
+    const context = useSessionContext()
+    const navigator = useNavigate()
 
 
     useEffect(() => {
@@ -74,7 +78,13 @@ const ProductDetail = () => {
         );
     };
 
-    const onSubmit = async () => {
+    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        if (!context.user) {
+            navigator(`/login/${productId}`)
+        }
+
         // TODO: Add product to cart
     }
 
