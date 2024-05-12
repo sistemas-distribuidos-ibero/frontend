@@ -1,4 +1,4 @@
-import CheckoutForm from "@assets/forms/CheckoutForm";
+import CheckoutForm from "@pages/cart/components/CheckoutForm";
 import PageTemplate from "@assets/page/PageTemplate";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -18,7 +18,18 @@ const Pay = () => {
                 locale: 'en',
             }}
             >
-                <CheckoutForm amount={amount} />
+                <CheckoutForm amount={amount} products={[
+                    {
+                        id: "1",
+                        name: "Product 1",
+                        price: 100,
+                    },
+                    {
+                        id: "2",
+                        name: "Product 2",
+                        price: 200,
+                    }
+                ]} />
             </Elements>
         </PageTemplate>
     );
