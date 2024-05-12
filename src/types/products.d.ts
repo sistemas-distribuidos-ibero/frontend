@@ -1,20 +1,19 @@
 export type Product = {
-    id: number;
-    category: number;
+    id: string;
+    category: string;
     name: string;
     description: string;
     stock: number;
     price: number;
     created: Date;
     updated: Date;
-    image: string;
-    rating: number;
 };
 
 export type Category = {
-    id: number;
+    id: string;
     name: string;
     description: string;
+    fields: string[];
     created: Date;
     updated: Date;
 };
