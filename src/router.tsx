@@ -8,6 +8,7 @@ import AdminProducts from "@pages/admin/AdminProducts";
 import AdminCategories from "@pages/admin/AdminCategories";
 import Me from "@pages/Me";
 import Pay from "@pages/Pay";
+import Cart from "@pages/Cart";
 import Success from "@pages/cart/Success";
 import Orders from "@pages/orders/Orders";
 import CreateOrder from "@pages/orders/CreateOrder";
@@ -47,7 +48,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/cart",
-        element: <Pay />,
+        element: <Cart />,
     },
     {
         path: "/cart/success",
