@@ -13,14 +13,15 @@ import { useSessionContext } from '@hooks/useSessionContext';
 const ProductDetail = () => {
     const { productId } = useParams();
     const { get, post } = useAPI();
+    const context = useSessionContext()
+    const navigator = useNavigate()
+
     const [product, setProduct] = useState<Product>();
     const [category, setCategory] = useState<Category>();
     const [products, setProducts] = useState<Product[]>([]);
 
     const [quantity, setQuantity] = useState(1);
 
-    const context = useSessionContext()
-    const navigator = useNavigate()
 
 
     useEffect(() => {
@@ -81,11 +82,18 @@ const ProductDetail = () => {
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!context.user) {
+        const user = context.user
+
+        if (!user) {
             navigator(`/login/${productId}`)
         }
+        else {
+            const response = await post('cart/add', '', JSON.stringify({ item_id: productId, quantity: quantity, user_id: user.id }));
+            console.log(response);
 
-        // TODO: Add product to cart
+            // if (response) {
+            // }
+        }
     }
 
     return (
