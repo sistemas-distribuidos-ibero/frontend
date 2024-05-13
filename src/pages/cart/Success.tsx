@@ -1,8 +1,38 @@
 import PageTemplate from "@assets/page/PageTemplate";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { useAPI } from "@hooks/useAPI";
+import { useSessionContext } from "@hooks/useSessionContext";
+import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const Success = () => {
+    const { id } = useParams()
+    const context = useSessionContext()
+    const { get, post, delet } = useAPI()
+
+    useEffect(() => {
+        const getData = async () => {
+            const response = await get('users/' + id, '')
+
+            if (response) {
+                context.setUser(response.user)
+            }
+
+            const buy = await post('buy/' + id, '', JSON.stringify({ index_url: '' }))
+
+
+            const mail = await post('sendOrderConfirmation', '', JSON.stringify({ email: response.user.email, nombreUsuario: response.user.name + ' ' + response.user.lastname, index_url: '', order_id: buy.order_id }))
+
+            console.log(mail);
+
+            const delete_cart = await delet('cart/' + id, '')
+
+            console.log(delete_cart);
+        }
+
+        getData()
+    }, [])
+
     return (
         <PageTemplate>
             <Link to="/" className="self-start inline-flex items-center gap-2 mb-5">

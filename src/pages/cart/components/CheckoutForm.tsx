@@ -7,7 +7,7 @@ import ProductCard from "./ProductCard";
 
 interface Props {
     amount: number
-    products: any[]
+    products: Product[]
 }
 
 const CheckoutForm = ({ amount, products }: Props) => {
@@ -28,7 +28,6 @@ const CheckoutForm = ({ amount, products }: Props) => {
                         <ProductCard
                             product={product}
                             key={i}
-                            quantity={1}
                             IncrementProduct={() => { }}
                             DecrementProduct={() => { }}
                         />

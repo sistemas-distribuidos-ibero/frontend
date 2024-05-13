@@ -72,7 +72,7 @@ export const useAPI = () => {
             method: 'DELETE',
             headers: {
                 'Authorization': 'Bearer ' + token
-            },
+            }
         })
 
         if (response.ok) {

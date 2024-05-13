@@ -46,11 +46,11 @@ export const router = createBrowserRouter([
         element: <AdminCategories />,
     },
     {
-        path: "/cart/pay",
+        path: "/cart",
         element: <Pay />,
     },
     {
-        path: "/cart/success",
+        path: "/cart/success/:id",
         element: <Success />,
     },
     {
