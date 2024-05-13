@@ -41,9 +41,10 @@ const SessionContextProvider = ({ children }: Props) => {
             }
         ))
 
-        console.log(response)
-
         if (response) {
+            const mail = await post('sendAccountConfirmation', '', JSON.stringify({ email: email, nombreUsuario: name + ' ' + lastname, index_url: 'http://localhost:3000' }))
+            console.log(mail);
+
             setUser(response.user)
             return true
         }
