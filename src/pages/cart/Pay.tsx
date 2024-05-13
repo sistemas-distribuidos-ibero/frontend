@@ -2,44 +2,25 @@ import CheckoutForm from "@pages/cart/components/CheckoutForm";
 import PageTemplate from "@assets/page/PageTemplate";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
-
-
-
-const { post, delet} = useAPI();
-
-const addItemToCart = async (userId, itemId, quantity, token) => {
-    const endpoint = '/cart';
-    const body = JSON.stringify({ user_id: userId, item_id: itemId, quantity: quantity });
-    return await post(endpoint, token, body);
-}
-
-
-const fetchCart = async (userId, token) => {
-    const endpoint = '/get-cart';
-    const body = JSON.stringify({ user_id: userId });
-    return await post(endpoint, token, body);
-}
-
-
-const { delet } = useAPI();  // Note: Consider renaming 'delet' to 'delete' in your hook for better readability.
-
-const deleteCart = async (userId, token) => {
-    const endpoint = '/cart';
-    const body = JSON.stringify({ user_id: userId });
-    return await delet(endpoint, token, body);
-}
-
-
+import { useSessionContext } from '@hooks/useSessionContext';
 
 const Pay = () => {
+    const context = useSessionContext();
+    
+    const user_id =context?.user
 
+    if (!user_id) {
+        return <div>User not found, please log in.</div>;
+    }
     const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
     // TODO: get amount from cart
     const amount = 1
 
     return (
+        
         <PageTemplate>
+            <div>Hello, {context.user.name}</div>
+            
             <Elements stripe={stripePromise} options={{
                 mode: 'payment',
                 amount: amount * 100,

@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
         element: <AdminCategories />,
     },
     {
-        path: "/cart/pay",
+        path: "/cart",
         element: <Pay />,
     },
     {
