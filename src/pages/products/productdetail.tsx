@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageTemplate from "@assets/PageTemplate";
 import { useAPI } from '@hooks/useAPI';
@@ -8,13 +8,15 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useSessionContext } from '@hooks/useSessionContext';
+import { Toast } from 'primereact/toast';
 
 
 const ProductDetail = () => {
     const { productId } = useParams();
-    const { get, post } = useAPI();
+    const { get, post, put } = useAPI();
     const context = useSessionContext()
     const navigator = useNavigate()
+    const toast = useRef(null);
 
     const [product, setProduct] = useState<Product>();
     const [category, setCategory] = useState<Category>();
@@ -89,15 +91,24 @@ const ProductDetail = () => {
         }
         else {
             const response = await post('cart/add', '', JSON.stringify({ item_id: productId, quantity: quantity, user_id: user.id }));
-            console.log(response);
 
-            // if (response) {
-            // }
+            if (response && product) {
+                await put(`products/${productId}`, '', JSON.stringify({ stock: product.stock - quantity }));
+
+                const response = await get(`products/${productId}`, '');
+
+                if (response) {
+                    setProduct(response);
+                    toast.current?.show({ severity: 'success', summary: 'New Item Added', detail: 'Your item has been added successfully', life: 3000 });
+                }
+
+            }
         }
     }
 
     return (
         <PageTemplate>
+            <Toast ref={toast} />
             <section className='min-h-[55vh]'>
                 <h1 className='text-3xl tracking-wider'>{product?.name}</h1>
                 <h2 className='text-xl text-slate-500'>{category?.name}</h2>
