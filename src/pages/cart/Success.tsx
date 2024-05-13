@@ -18,16 +18,12 @@ const Success = () => {
                 context.setUser(response.user)
             }
 
-            const buy = await post('buy/' + id, '', JSON.stringify({ index_url: '' }))
+            const buy = await post('buy/' + id, '', JSON.stringify({ index_url: 'http://localhost:3000' }))
 
+            await post('sendOrderConfirmation', '', JSON.stringify({ email: response.user.email, nombreUsuario: response.user.name + ' ' + response.user.lastname, index_url: '', order_id: buy.order_id }))
 
-            const mail = await post('sendOrderConfirmation', '', JSON.stringify({ email: response.user.email, nombreUsuario: response.user.name + ' ' + response.user.lastname, index_url: '', order_id: buy.order_id }))
+            await delet('cart/' + id, '')
 
-            console.log(mail);
-
-            const delete_cart = await delet('cart/' + id, '')
-
-            console.log(delete_cart);
         }
 
         getData()
