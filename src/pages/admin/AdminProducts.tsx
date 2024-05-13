@@ -2,7 +2,12 @@ import PageTemplate from "@assets/page/PageTemplate";
 import { useEffect, useState } from "react";
 import ModalProduct from "./components/ModalProduct";
 import { Button } from "primereact/button";
+import { useAPI } from "../../hooks/useAPI";
 
+const {get} = useAPI();
+const {delet} = useAPI();
+
+const response = await get('products', '');
 
 const AdminProducts = () => {
 
@@ -13,7 +18,7 @@ const AdminProducts = () => {
 
     useEffect(() => {
     
-        const products: Product[] = [
+        /*const products: Product[] = [
             {
                 _id: "1",
                 category: "1",
@@ -58,15 +63,18 @@ const AdminProducts = () => {
                 created: new Date(),
                 updated: new Date()
             }
-        ];
+        ];*/
 
-        setProductos(products);
+        if (response != false) {
+            setProductos(response);
+        }
 
     }, [])
 
     const DeleteProduct = (id: string) => {
 
         setProductos(prevState => prevState.filter(producto => producto._id !== id));
+        delet('products/'+id, '')
     }
 
     const EditProduct = (id: string) => {

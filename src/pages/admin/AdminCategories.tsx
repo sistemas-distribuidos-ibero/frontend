@@ -2,8 +2,12 @@ import PageTemplate from "@assets/page/PageTemplate";
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import ModalCategory from "./components/ModalCategory";
+import { useAPI } from "../../hooks/useAPI";
 
-export const categorias: Category[] = [
+const {get} = useAPI();
+const {delet} = useAPI();
+
+/*export const categorias: Category[] = [
     {
         _id: '1',
         name: "Camaras",
@@ -20,7 +24,9 @@ export const categorias: Category[] = [
         created: new Date(),
         updated: new Date()
     },
-]
+]*/
+
+const response = await get('categories', '');
 
 const AdminCategories = () => {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -28,13 +34,14 @@ const AdminCategories = () => {
     const [idCategory, setIdCategory] = useState('');
 
     useEffect(() => {
-
-        setCategories(categorias);
+        if (response != false) {
+            setCategories(response);
+        }
     }, [])
 
     const DeleteCategory = (id: string) => {
-
         setCategories(prevState => prevState.filter(category => category._id !== id));
+        delet('categories/'+id, '')
     }
 
     const EditCategory = (id: string) => {

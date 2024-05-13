@@ -7,6 +7,10 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { FloatLabel } from 'primereact/floatlabel';
 import { InputText } from 'primereact/inputtext';
+import { useAPI } from "../../../hooks/useAPI";
+
+const {put} = useAPI();
+const {post} = useAPI();
 
 type props = {
     isVisible: boolean;
@@ -71,7 +75,14 @@ const ModalProduct = ( { isVisible, setIsVisible, idProducto, setIdProducto, pro
         e.preventDefault();
         if (idProducto === '') {
             setProductos([...productos, {_id: (productos.length + 1).toString(), category, name, description, stock, price, fields, created: new Date(), updated: new Date()}]);
-            console.log({_id: (productos.length + 1).toString(), category, name, description, stock, price, fields, created: new Date(), updated: new Date()})
+            post('products','',JSON.stringify(
+                {'_id':(productos.length + 1).toString(),
+                'name':name, 
+                'category': category, 
+                'description': description, 
+                'stock': stock, 
+                'price': price, 
+                'fields': fields}))
         }
         else{
             const update = new Date();
@@ -87,6 +98,13 @@ const ModalProduct = ( { isVisible, setIsVisible, idProducto, setIdProducto, pro
             temp[parseInt(idProducto)-1].updated = update;
 
             setProductos(temp);
+            put('products/'+(parseInt(idProducto)-1).toString(),'',JSON.stringify(
+                {'name':name, 
+                'category': category, 
+                'description': description, 
+                'stock': stock, 
+                'price': price, 
+                'fields': fields}))
         }
 
         setIsVisible(false);

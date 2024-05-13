@@ -2,6 +2,7 @@ import TextInput from '@assets/components/TextInput';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { useEffect, useState } from 'react';
+import { useAPI } from "../../../hooks/useAPI";
 
 type props = {
     isVisible: boolean;
@@ -11,6 +12,9 @@ type props = {
     categorias: Category[];
     setCategorias: React.Dispatch<React.SetStateAction<Category[]>>;
 }
+
+const {put} = useAPI();
+const {post} = useAPI();
 
 const ModalCategory = ( { isVisible, setIsVisible, idCategoria, setIdCategoria, categorias, setCategorias }: props) => {
 
@@ -38,6 +42,13 @@ const ModalCategory = ( { isVisible, setIsVisible, idCategoria, setIdCategoria, 
         
         if (idCategoria === '') {
             setCategorias([...categorias, {_id: (categorias.length + 1).toString(), name, description, fields: fields.split(', '), created: new Date(), updated: new Date()}]);
+            post('categories','', JSON.stringify(
+                {'_id':(categorias.length + 1).toString(),
+                'name':name, 
+                'description':description, 
+                'fields':fields.split(', '), 
+                'created': new Date(), 
+                'updated': new Date()}))
         }
         else{
             const update = new Date();
@@ -50,6 +61,11 @@ const ModalCategory = ( { isVisible, setIsVisible, idCategoria, setIdCategoria, 
             temp[parseInt(idCategoria)-1].updated = update;
 
             setCategorias(temp);
+            put('/categories/'+idCategoria,'',JSON.stringify(
+                {'name':temp[parseInt(idCategoria)-1].name,
+                'description':temp[parseInt(idCategoria)-1].description,
+                'fields':temp[parseInt(idCategoria)-1].fields,
+                'updated':temp[parseInt(idCategoria)-1].updated}))
         }
 
         setIsVisible(false);
